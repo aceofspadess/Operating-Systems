@@ -1,0 +1,95 @@
+#!/bin/bash
+
+if (test $# -eq 0) then
+
+	echo
+	echo Id]------------------ ]Name]-------------------- ]Phone]---------- ]TTY]---------- ]What]
+
+	currOnline=`who | cut -d " " -f1 | sort -u`
+
+	for x in $currOnline
+	do
+		id=`w | grep $x | tr -s " " | cut -d " " -f1 | sort -u`
+		name=`who | grep $x /etc/passwd | cut -d ":" -f5 | cut -d ","  -f1 | sort -u`
+		phone=`who | grep $x /etc/passwd | cut -d ":" -f5 |cut -d "," -f3 | sort -u`
+		tty=`w | grep $x | tr -s " " | cut -d " " -f2 | sort -u`
+		what=`w |grep $x | tr -s " " | cut -d " " -f8 | sort -u`
+
+		if [ -z "$tty" ]; then
+			tty="Not on"
+			what="-"
+		fi
+
+
+		if [ -z "$id" ]; then
+			id=`grep $x /etc/passwd | cut -d ":" -f1 | sort -u`
+		fi
+
+	
+		echo $id ]---------- ]$name]----------]$phone]----------]$tty]----------]$what]
+		echo
+		sleep 1
+	done
+fi
+
+if ( test "$1" = "all" ) then
+
+        echo
+        echo Id]------------------ ]Name]-------------------- ]Phone]---------- ]TTY]---------- ]What]
+
+	all=`grep BEARSMASK /etc/passwd | cut -d ":" -f1 | sort -u`
+
+	for x in $all
+	do
+		id=`grep $x /etc/passwd |cut -d ":" -f1 |sort -u`
+		name=`grep $x /etc/passwd |cut -d ":" -f5 | cut -d "," -f1 | sort -u`
+		phone=`grep $x /etc/passwd |cut -d ":" -f5 | cut -d "," -f3 | sort -u`
+		tty=`w | grep $x | tr -s " " | cut -d " " -f2 | sort -u`
+		what=`w | grep $x | tr -s " " | cut -d " " -f8 | sort -u`
+
+		if [ -z "$tty" ]; then
+			tty="Not on"
+			what="-"
+		fi
+
+                echo $id ]---------- ]$name]----------]$phone]----------]$tty]----------]$what]
+                echo
+                sleep 1
+
+	done
+
+
+fi
+
+if ( test $# -gt 0) then
+
+	if ( test "$1" != "all" ) then
+
+	        echo
+        	echo Id]------------------ ]Name]-------------------- ]Phone]---------- ]TTY]---------- ]What]
+
+
+		for x in $*
+		do
+	                id=`grep $x /etc/passwd |cut -d ":" -f1 |sort -u`
+	                name=`grep $x /etc/passwd |cut -d ":" -f5 | cut -d "," -f1 | sort -u`
+	                phone=`grep $x /etc/passwd |cut -d ":" -f5 | cut -d "," -f3 | sort -u`
+	                tty=`w | grep $x | tr -s " " | cut -d " " -f2 | sort -u`
+	                what=`w | grep $x | tr -s " " | cut -d " " -f8 | sort -u`
+
+
+			if [ -z "$tty" ]; then 
+				tty="Not on"
+				what="-"
+			fi
+
+
+	     	        echo $id ]---------- ]$name]----------]$phone]----------]$tty]----------]$what]
+	                echo
+	                sleep 1
+
+		done
+
+
+	fi
+fi

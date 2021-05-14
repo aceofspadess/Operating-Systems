@@ -1,0 +1,13 @@
+#!/bin/bash
+
+for id in `ps -ef | grep producer | tr -s ' ' | cut -d' ' -f 2`; \
+do kill -9 $id;
+ done
+
+for id in `ps -ef | grep consumer | tr -s ' ' | cut -d' ' -f 2`; \
+do kill -9 $id; 
+ done
+
+Run=`ps -ef | grep consumer | tr -s ' ' | cut -d' ' -f 2`
+
+kill -9 $Run

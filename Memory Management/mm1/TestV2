@@ -1,0 +1,25 @@
+#!/bin/bash
+
+cc consumer.c -o consumer
+cc producer.c -o producer
+cc shutdown.c -o shutdown
+
+ipcs | grep miller
+
+consumer 8 16 3 &
+
+sleep 3
+
+producer 128 10 &
+
+sleep 1
+
+producer 32 5 &
+producer 32 4 &
+producer 32 3 &
+producer 32 2 &
+producer 32 1 &
+
+sleep 7
+
+shutdown

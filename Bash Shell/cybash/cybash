@@ -1,0 +1,164 @@
+#!/bin/bash
+
+echo you entered Cybash
+#cmd='no'
+
+while (test "$cmd" != "cybye")
+do
+
+#Read user input
+
+	echo -n "Cybash> "
+	read cmd
+	if ( test "$cmd" == "cyshow") then
+
+		echo -n "I am going to display a file using: $cmd. Please enter the file name: "
+	        read args
+		sleep 1
+
+		less $args
+	fi
+
+        if ( test "$cmd" == "cycall") then
+
+                echo -n "I am going to look for a user using: $cmd. Please enter the user id: "
+	        read args
+
+                sleep 1
+
+#Using the provided id, search for that users name and phone number using who   
+       	
+		name=`who | grep $args /etc/passwd | cut -d ":" -f5 | cut -d ","  -f1 | sort -u`
+                phone=`who | grep $args /etc/passwd | cut -d ":" -f5 |cut -d "," -f3 | sort -u`
+
+		echo User:$name------Phone:$phone
+
+        fi
+
+
+	if ( test "$cmd" == "cylist") then
+
+		echo "I am going to display the current online users using: $cmd"
+		
+#currOnline will get only the column of first and last name
+		currOnline=`who | cut -d " " -f1 | sort -u`
+
+		for x in $currOnline
+		do
+			name=`who | grep $x /etc/passwd | cut -d ":" -f5 | cut -d ","  -f1 | sort -u`
+			echo $name
+			sleep 1
+		done
+	fi
+
+	
+	if ( test "$cmd" == "cystuff") then
+		
+#ls command
+		echo "I am going to display the files in this directory using: $cmd"
+		sleep 1
+		ls
+
+	fi
+
+
+	if ( test "$cmd" == "cyhelp") then
+
+		echo " The current available commands are:"
+		echo
+		sleep 1
+		
+		echo "cyshow - Display named file on the screen one page at a time with the capability to scroll up or down with the arrow keys.  "
+		echo
+		sleep 1
+
+		echo "cycall - Lookup phone number of userid and print user’s full name and office phone number on the screen."
+		echo
+		sleep 1
+
+		echo "cylist - Display full names of those currently logged in"
+		echo
+		sleep 1
+		
+		echo "cystuff - Display contents of current directory in column form."
+		echo
+		sleep 1
+
+		echo "cyhelp - Display commands (and syntax) available"
+		echo
+		sleep 1
+
+		echo "cycrazy - I wonder what this will do"
+		echo
+		sleep 1
+
+		echo "cyvi - Vim will start editing the specified filename."
+		echo
+		sleep 1
+
+		echo "bigbrother [0 to x amount of arguments]-  Type in just "bigbrother" and find out information about the currently logged on users."
+		echo
+		echo "Type in "bigbrother all" and find out information about all users in the BEARSMASK class."  
+		echo
+		echo "Finally,you can use"bigbrother" for a specified list of users, by typing in their ids as arguments."
+		echo
+		sleep 1
+
+		echo "cybye - Leaves the bash"
+		sleep 1
+		echo
+	fi
+
+	if ( test "$cmd" == "bigbrother") then
+
+		echo -n "Arguments> "
+		read args
+		bigbrother $args
+
+	fi
+
+	if ( test "$cmd" == "cycrazy") then
+#shhhh
+		echo "Hippoman jenkins ATTACKS"
+
+		echo " .-''''-. _    "
+		echo " ('    '  '0)-/)"
+		echo " '..____..:    \._"
+		echo "   \u  u (        '-..------._"
+		echo "   |     /      :   '.        '--."
+		echo "  .nn_nn/ (      :   '            '\ "
+		echo " ( '' '' /      ;     .             \ "
+		echo "  ''----' \          :            : '. "
+		echo "         .'/                           '."
+		echo "        / /                             '."
+		echo "       /_|       )                     .\|"
+		echo "        |      /\                     . '"
+		echo "         '--.__|  '--._  ,            /"
+                echo "      			/'-,          .'"
+                echo "     			/   |        _.' "
+                echo "			   snd (____\       /   " 
+                echo "			             \      \    "
+                echo "         			     '-'-'-' " 
+
+	fi
+
+	if ( test "$cmd" == "cyvi") then
+
+#vim is for cool people 		
+		echo -n "I am going to open a file using with VIM. Please provide a file name: "
+	        read args
+		vim $args
+
+	fi
+
+	if ( test "$cmd" == "cyguy") then
+	
+		echo "Openning a bash shell"
+		bash
+
+	fi
+
+done
+
+echo GoodBye!
+

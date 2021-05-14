@@ -1,0 +1,46 @@
+  echo Memory Manager One
+  echo
+  echo compiling producer.c
+  cc producer.c -o producer
+  echo compiling consumer.c
+  cc consumer.c -o consumer
+  echo compiling shutdown.c
+  cc shutdown.c -o shutdownsim
+  ls
+  echo
+  read x
+  echo IPCS
+  ipcs
+  read x
+  echo Start the Simulation with 16 8 3 ....
+  consumer 8 16 3 &
+  echo "sleep 3"
+  sleep 3
+  producer 128 5 &
+  sleep 1
+  producer 32 5 &
+  producer 32 4 &
+  producer 32 3 &
+  producer 32 1 &
+  sleep 10
+  producer 48 10 &
+  sleep 1
+  producer 16  2 &
+  sleep 1
+  producer 64 10 &
+  sleep 1
+  producer 4 5 &
+  producer 4 4 &
+  producer 4 3 &
+  producer 4 2 &
+  producer 4 1 &
+  sleep 1
+  producer 8 5 &
+  sleep 18
+  echo CLEANING UP
+  shutdownsim
+  sleep 2
+  echo
+  echo IPCS
+  ipcs 
+  echo All Done

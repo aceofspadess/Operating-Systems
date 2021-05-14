@@ -1,0 +1,29 @@
+#!/bin/bash
+
+cc consumer.c -o consumer
+cc producer.c -o producer
+cc shutdown.c -o shutdown
+
+consumer 10 10 2 &
+
+sleep 1
+
+producer 4 6 &
+
+sleep 2
+
+producer 3 5 &
+
+sleep 5
+
+producer 19 5 &
+
+#sleep 3
+producer 50 5 &
+
+sleep 1
+producer 5 5 & 
+
+sleep 7
+
+shutdown
